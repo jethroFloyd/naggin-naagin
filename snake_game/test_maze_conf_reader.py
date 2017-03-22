@@ -1,17 +1,15 @@
-# untouched test files from spranesh's implementation
-
 import maze_conf_reader as M
 
 def testDefaultConfiguration():
-  g = M.GetDefaultConfiguration()
+  g = M.GetNewStateAccordingToDefaultConfiguration()
   assert(g.size == 20)
 
-def testReadConfigurationFile():
-  g = M.ReadConfigurationFile('')
+def testConfigurationFile():
+  g = M.GetNewStateAccordingToConfigurationFile('')
   assert(g.size == 20)
 
-def testReadConfigurationString():
-  state = M.ReadConfigurationString(""" {
+def testConfigurationString():
+  state = M.GetNewStateAccordingToString(""" {
       "num_fruits" : 3,
       "initial_length" : 3,
       "size" : 500,

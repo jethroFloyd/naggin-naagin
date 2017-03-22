@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-
-# untouched test file from spranesh's implementation
-
 import game_state as G
 import snake_logic as S
 import directions as D

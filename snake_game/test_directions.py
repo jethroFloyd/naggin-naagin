@@ -1,5 +1,3 @@
-# untouched test files from Spranesh's implementation
-
 import directions as D
 
 def testReverse():

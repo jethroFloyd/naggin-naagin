@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-
-# The logic of the game.
-
-
 import directions
 
 import random
@@ -11,6 +7,7 @@ class SnakeLogic:
   def __init__(self, state):
     self.state = state
     self.alive = True
+    self.was_fruit_eaten = False
     for i in range(self.state.num_fruits - len(self.state.fruits)):
       self.state.fruits.append(self.__CreateNewFruit())
 
@@ -37,13 +34,15 @@ class SnakeLogic:
       return True
     return False
 
+# There's an alternate definition of __CreateNewFruit and
+# a corresponding alternate length boost.
 
-# To-do:
-# Update this function to create new fruits
-# with different sets of points.
-# It would be an interesting study to see how the 
-# agent learns in that context, and how fast.
-# See comment about this in Move function also.
+# Update: This has since been removed in this commit because
+# it takes too long to train currently.
+
+# Like in the original snake game, there can be bonus foods
+# with extra rewards; but with no length boost.
+
 
 
   def __CreateNewFruit(self):
@@ -58,9 +57,16 @@ class SnakeLogic:
         continue
       return (x, y)
 
+  def GetAllowedMoves(self):
+    d = directions.GetAllDirections()
+    d.remove(directions.Reverse(self.state.direction))
+    return d
+
   def Move(self, direction):
     if direction == directions.Reverse(self.state.direction):
-      direction = directions.Reverse(self.state.direction)
+      direction = self.state.direction
+      # self.alive = False
+      # return
 
     head = self.state.snake_position[0]
     self.state.snake_position.insert(0, 
@@ -74,21 +80,17 @@ class SnakeLogic:
     if self.alive is False:
       return
 
-# Check if the new head is at a fruit. If so, we make the snake grow
-# larger, and create a new fruit. Otherwise, we move the snake one step
-# by popping the last coordinate.
-
+    # Check if the new head is at a fruit. If so, we make the snake grow
+    # larger, and create a new fruit. Otherwise, we move the snake one step
+    # by popping the last coordinate.
     if self.__WasFruitEaten():
+      print "F"
+      self.was_fruit_eaten = True
       i = self.state.fruits.index(head)
       self.state.fruits[i] = self.__CreateNewFruit()
       self.state.snake_length += 1
-      # This function above also needs to be updated when
-      # we update the bonus fruits.
-      # Eating a more nutritious fruit should make it
-      # longer, I suppose.
-      # Without this constraint, it becomes meaningless
-      # to add the previous bonus point.
     else:
+      self.was_fruit_eaten = False
       self.state.snake_position.pop()
     return
 
@@ -100,4 +102,7 @@ class SnakeLogic:
 
   def IsAlive(self):
     return self.alive
+
+  def WasFruitEaten(self):
+    return self.was_fruit_eaten
 

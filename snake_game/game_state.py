@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 
-# This file is important; it defines the
-# initial_length of the snake. 
-
-# To-Do: Move these parameters to a configuration file
-# which should ideally be controllable from a CLI.
+""" Definition of the Snake Game State."""
 
 import directions
 
 import sys
 
 class GameState:
-  def __init__(self, size, initial_length=3, num_fruits=1):
+  def __init__(self, size, initial_length=3, num_fruits=5):
     if initial_length >= size/2:
       sys.stderr.write("Too large an initial size. No point playing. Bye!")
       sys.exit(1)

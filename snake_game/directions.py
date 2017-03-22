@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
-# Possible Directions for the Snake
+""" Possible Directions for the Snake """
 
 UP = 'UP'
 DOWN = 'DOWN'
 LEFT = 'LEFT'
 RIGHT = 'RIGHT'
+
+def GetAllDirections():
+  return [UP, DOWN, LEFT, RIGHT]
 
 def Reverse(direction):
   return {UP: DOWN,
@@ -14,7 +17,7 @@ def Reverse(direction):
           RIGHT: LEFT}[direction]
 
 def MoveInDirection(square, direction):
-  # Returns the given square moved in the given direction.
+  """ Returns the given square moved in the given direction. """
   (x, y) = square
   if direction == UP:
     return (x, y-1)
